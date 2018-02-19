@@ -20,7 +20,12 @@ let fibonacci x : bigint =
 
 let reverseList list = [for i in (List.length list) - 1  .. -1 .. 0 -> list.[i]]
 
-let createSpecialList n m = [for i in 0 .. m -> pown 2 (n+i)]
+let rec createSLRec m i list b =     
+    if i = m then list @ [b]
+    else         
+        createSLRec m (i+1) (list @ [b]) (b * 2)
+
+let createSpecialList n m = createSLRec m 0 [] (pown 2 n)
 
 [<EntryPoint>]
 let main argv =
