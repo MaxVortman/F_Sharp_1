@@ -20,10 +20,11 @@ let fibonacci x : bigint =
 
 let reverseList list = [for i in (List.length list) - 1  .. -1 .. 0 -> list.[i]]
 
+let createSpecialList n m = [for i in 0 .. m -> pown 2 (n+i)]
 
 [<EntryPoint>]
 let main argv =
-    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n3-reverse\n"
+    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n3-reverse\n4-special list"
     let problemNumber = Convert.ToInt32(Console.ReadLine())
     if problemNumber = 1 then
         printfn "Enter the number"
@@ -38,6 +39,11 @@ let main argv =
         let list = Console.ReadLine().Split() |> List.ofArray
         printfn "Reversed list : "
         printfn "%A " (reverseList list)
+    elif problemNumber = 4 then
+        printfn "Enter the \"n\" and \"m\""
+        let list = Console.ReadLine().Split() |> List.ofArray |> List.map (fun a -> int a)
+        printfn "Created list : "
+        printfn "%A " (createSpecialList list.[0] list.[1])
 
     Console.ReadKey() |> ignore
     0 // return an integer exit code
