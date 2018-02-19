@@ -18,7 +18,11 @@ let fibonacci x : bigint =
         | _ -> fibSeq |> Seq.take (x - 1) |> Seq.last
 
 
-let reverseList list = [for i in (List.length list) - 1  .. -1 .. 0 -> list.[i]]
+let rec reverseList list =
+    match list with
+    | [] -> []
+    | [x] -> [x]
+    | head :: tail -> reverseList tail @ [head]
 
 
 [<EntryPoint>]
