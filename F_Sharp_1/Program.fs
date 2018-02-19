@@ -20,7 +20,15 @@ let fibonacci x : bigint =
 
 [<EntryPoint>]
 let main argv =
-    let x = Convert.ToInt32(Console.ReadLine())
-    printfn "Factorial : %A \nFibonacci : %A" (factorial x) (fibonacci x)
+    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n"
+    let problemNumber = Convert.ToInt32(Console.ReadLine())
+    if problemNumber = 1 then
+        printfn "Enter the number"
+        let x = Convert.ToInt32(Console.ReadLine())
+        printfn "Factorial : %A" (factorial x)
+    elif problemNumber = 2 then
+        printfn "Enter the number"
+        let x = Convert.ToInt32(Console.ReadLine())
+        printfn "Fibonacci : %A" (fibonacci x)
     Console.ReadKey() |> ignore
     0 // return an integer exit code
