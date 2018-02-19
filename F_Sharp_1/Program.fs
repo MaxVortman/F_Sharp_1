@@ -9,7 +9,7 @@ let factorial x : bigint =
         | _ -> [1..x] |> Seq.fold (fun acc elem -> acc*bigint elem) 1I
 
 let fibSeq = Seq.unfold (fun state ->
-        Some(fst state + snd state, (snd state, fst state + snd state))) (0I,1I)
+        Some(fst state + snd state, (snd state, fst state + snd state))) (0I, 1I)
 
 let fibonacci x : bigint = 
     match x with 
@@ -21,6 +21,6 @@ let fibonacci x : bigint =
 [<EntryPoint>]
 let main argv =
     let x = Convert.ToInt32(Console.ReadLine())
-    Console.WriteLine("Factorial : {0} \nFibonacci : {1}", factorial x, fibonacci x) 
-    Console.ReadKey()
+    printfn "Factorial : %A \nFibonacci : %A" (factorial x) (fibonacci x)
+    Console.ReadKey() |> ignore
     0 // return an integer exit code
