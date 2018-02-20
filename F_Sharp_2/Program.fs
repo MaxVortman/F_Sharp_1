@@ -30,12 +30,11 @@ let isPalindrome str =
     checkForEquals (str, List.rev str) 0 ((List.length str) / 2)
 
 let separateListByTwo n list = 
-    let rec separate (left, right) i = 
-        if i = n then (left, right)
-        else 
-            match (left, right) with
-            | (x, h2 :: t2) -> separate ((h2 :: (List.rev x)) |> List.rev, t2) (i + 1)
-    separate ([], list) 0
+    let rec separate n cont = function
+        | [] -> cont([],[])
+        | l when n = 0 -> cont([], l)
+        | h :: t -> separate (n - 1) (fun acc -> cont(h :: fst acc, snd acc)) t
+    separate n (fun x -> x) list
 
 
 let rec mergesort list = 
