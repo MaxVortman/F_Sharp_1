@@ -41,15 +41,13 @@ let separateListByTwo n list =
 let rec mergesort list = 
 
     let merge left right = 
-        let rec mergerec left right res =
+        let rec mergerec left right cont =
             match (left, right) with
-            | ([], []) -> res
-            | (_, []) -> res @ left
-            | ([], _) -> res @ right
-            | ([a], [b]) -> if a <= b then res @ [a] @ [b] else res @ [b] @ [a]
-            | (h1 :: t1, h2 :: t2) -> if h1 <= h2 then mergerec t1 right (res @ [h1]) 
-                                      else mergerec left t2 (res @ [h2])
-        mergerec left right []
+            | (l, []) -> cont l
+            | ([], r) -> cont r
+            | (h1 :: t1, h2 :: t2) -> if h1 <= h2 then mergerec t1 right  (fun acc -> cont(h1 :: acc))
+                                      else mergerec left t2 (fun acc -> cont(h2 :: acc))
+        mergerec left right (fun x -> x)
 
     let length = List.length list
     if length <= 1 then list
