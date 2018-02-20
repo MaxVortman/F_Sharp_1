@@ -23,11 +23,14 @@ let reverseList list = [for i in (List.length list) - 1  .. -1 .. 0 -> list.[i]]
 
 
 let createSpecialList n m = 
-    let rec createSLRec m i list b =     
-        if i = m then list @ [b]
+    let rec createSLRec i list b =     
+        if i = m then b :: list
         else         
-            createSLRec m (i+1) (list @ [b]) (b * 2)
-    createSLRec m 0 [] (pown 2 n)
+            createSLRec (i + 1) (b :: list) (b <<< 1)
+    if n = 0 then
+        createSLRec 0 [] 1 |> List.rev 
+    else
+        createSLRec 0 [] (2 <<< n) |> List.rev
 
 [<EntryPoint>]
 let main argv =
