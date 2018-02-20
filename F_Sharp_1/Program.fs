@@ -26,9 +26,20 @@ let reverse list =
         rev [] list
 
 
+
+let createSpecialList n m = 
+    let rec createSLRec i list b =     
+        if i = m then b :: list
+        else         
+            createSLRec (i + 1) (b :: list) (b <<< 1)
+    if n = 0 then
+        createSLRec 0 [] 1 |> List.rev 
+    else
+        createSLRec 0 [] (2 <<< n) |> List.rev
+
 [<EntryPoint>]
 let main argv =
-    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n3-reverse\n"
+    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n3-reverse\n4-special list"
     let problemNumber = Convert.ToInt32(Console.ReadLine())
     if problemNumber = 1 then
         printfn "Enter the number"
@@ -43,6 +54,11 @@ let main argv =
         let list = Console.ReadLine().Split() |> List.ofArray
         printfn "Reversed list : "
         printfn "%A " (reverse list)
+    elif problemNumber = 4 then
+        printfn "Enter the \"n\" and \"m\""
+        let list = Console.ReadLine().Split() |> List.ofArray |> List.map (fun a -> int a)
+        printfn "Created list : "
+        printfn "%A " (createSpecialList list.[0] list.[1])
 
     Console.ReadKey() |> ignore
     0 // return an integer exit code
