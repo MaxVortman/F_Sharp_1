@@ -18,9 +18,17 @@ let fibonacci x : bigint =
         | _ -> fibSeq |> Seq.take (x - 1) |> Seq.last
 
 
+let reverse list =
+        let rec rev rlist list =
+            match list with
+            | [] -> rlist
+            | h :: t -> rev (h :: rlist) t
+        rev [] list
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n"
+    printfn "Choose the problem:\n1-factorial\n2-fibonacci\n3-reverse\n"
     let problemNumber = Convert.ToInt32(Console.ReadLine())
     if problemNumber = 1 then
         printfn "Enter the number"
@@ -30,5 +38,11 @@ let main argv =
         printfn "Enter the number"
         let x = Convert.ToInt32(Console.ReadLine())
         printfn "Fibonacci : %A" (fibonacci x)
+    elif problemNumber = 3 then
+        printfn "Enter the list elem"
+        let list = Console.ReadLine().Split() |> List.ofArray
+        printfn "Reversed list : "
+        printfn "%A " (reverse list)
+
     Console.ReadKey() |> ignore
     0 // return an integer exit code
