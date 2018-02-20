@@ -18,7 +18,12 @@ let fibonacci x : bigint =
         | _ -> fibSeq |> Seq.take (x - 1) |> Seq.last
 
 
-let reverseList list = [for i in (List.length list) - 1  .. -1 .. 0 -> list.[i]]
+let reverse list =
+        let rec rev rlist list =
+            match list with
+            | [] -> rlist
+            | h :: t -> rev (h :: rlist) t
+        rev [] list
 
 
 
@@ -48,7 +53,7 @@ let main argv =
         printfn "Enter the list elem"
         let list = Console.ReadLine().Split() |> List.ofArray
         printfn "Reversed list : "
-        printfn "%A " (reverseList list)
+        printfn "%A " (reverse list)
     elif problemNumber = 4 then
         printfn "Enter the \"n\" and \"m\""
         let list = Console.ReadLine().Split() |> List.ofArray |> List.map (fun a -> int a)
