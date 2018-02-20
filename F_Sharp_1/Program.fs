@@ -18,11 +18,12 @@ let fibonacci x : bigint =
         | _ -> fibSeq |> Seq.take (x - 1) |> Seq.last
 
 
-let rec reverseList list =
-    match list with
-    | [] -> []
-    | [x] -> [x]
-    | head :: tail -> reverseList tail @ [head]
+let reverse list =
+        let rec rev rlist list =
+            match list with
+            | [] -> rlist
+            | h :: t -> rev (h :: rlist) t
+        rev [] list
 
 
 [<EntryPoint>]
@@ -41,7 +42,7 @@ let main argv =
         printfn "Enter the list elem"
         let list = Console.ReadLine().Split() |> List.ofArray
         printfn "Reversed list : "
-        printfn "%A " (reverseList list)
+        printfn "%A " (reverse list)
 
     Console.ReadKey() |> ignore
     0 // return an integer exit code
