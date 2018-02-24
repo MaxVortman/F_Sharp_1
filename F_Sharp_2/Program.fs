@@ -31,10 +31,10 @@ let isPalindrome str =
 
 let separateListByTwo n list = 
     let rec separate n cont = function
-        | [] -> cont([],[])
+        | [] -> cont([], [])
         | l when n = 0 -> cont([], l)
         | h :: t -> separate (n - 1) (fun acc -> cont(h :: fst acc, snd acc)) t
-    separate n (fun x -> x) list
+    separate n id list
 
 
 let rec mergesort list = 
@@ -46,7 +46,7 @@ let rec mergesort list =
             | ([], r) -> cont r
             | (h1 :: t1, h2 :: t2) -> if h1 <= h2 then mergerec t1 right  (fun acc -> cont(h1 :: acc))
                                       else mergerec left t2 (fun acc -> cont(h2 :: acc))
-        mergerec left right (fun x -> x)
+        mergerec left right id
 
     let length = List.length list
     if length <= 1 then list
@@ -76,7 +76,7 @@ let main argv =
         printfn "%O" (Seq.toList str |> isPalindrome)
     elif problemNumber = 4 then
         printfn "Enter the list elem: "
-        let list = Console.ReadLine().Split() |> List.ofArray |> List.map (fun x -> int x)
+        let list = Console.ReadLine().Split() |> List.ofArray |> List.map int
         printfn "sorted list: %A" <| mergesort list
     Console.ReadKey() |> ignore
 
