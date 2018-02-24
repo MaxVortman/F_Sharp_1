@@ -11,9 +11,9 @@ let mulDigits x =
 let indexOf x list = 
     let rec index i list = 
         match list with
-        | [] -> -1
-        | [x] -> i
-        | h :: t -> if h = x then i 
+        | [] -> None
+        | [a] -> if a = x then Some(i) else None
+        | h :: t -> if h = x then Some(i)
                     else index (i + 1) t
     index 0 list
 
@@ -37,18 +37,24 @@ let main argv =
     let problemNumber = Convert.ToInt32(Console.ReadLine())
     if problemNumber = 1 then 
         printfn "Enter a number: "
-        let x = Convert.ToInt32(Console.ReadLine())
-        printfn "%i" <| mulDigits x
+        let f, x = Int32.TryParse(Console.ReadLine())
+        if f = true then
+            printfn "%i" <| mulDigits x
     elif problemNumber = 2 then 
         printfn "Enter the list elem: "
-        let list = Console.ReadLine().Split() |> List.ofArray |> List.map (fun x -> int x)
+        let list = Console.ReadLine().Split() |> List.ofArray |> List.map int
         printfn "Enter the elem to find: "
-        let x = Convert.ToInt32(Console.ReadLine())
-        printfn "Index of %i in list : %i" <| x <| indexOf x list
+        let f, x = Int32.TryParse(Console.ReadLine())
+        if f = true then
+            let index = indexOf x list
+            if index = None then 
+                printfn "%i not in list" x
+                else
+                    printfn "Index of %i in list : %i" <| x <| (Option.get index)
     elif problemNumber = 3 then
-        printfn "Enter the string: "
-        let str = Console.ReadLine()
-        printfn "%O" (Seq.toList str |> isPalindrome)
+          printfn "Enter the string: "
+          let str = Console.ReadLine()
+          printfn "%O" (Seq.toList str |> isPalindrome)
     Console.ReadKey() |> ignore
 
     0 // return an integer exit code
