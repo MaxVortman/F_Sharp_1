@@ -22,9 +22,11 @@ let isPalindrome str =
         if i = n then true
         else
             match (list1, list2) with
+            | ([], _) -> false
+            | (_, []) -> false
             | ([], []) -> true
             | ([a], [b]) when a = b -> true
-            | ([a], [b]) -> false
+            | ([_], [_]) -> false
             | (h1 :: t1, h2 :: t2) -> if h1 <> h2 then false
                                       else checkForEquals (t1, t2) (i + 1) n
     checkForEquals (str, List.rev str) 0 ((List.length str) / 2)
