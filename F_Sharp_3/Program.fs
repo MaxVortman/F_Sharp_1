@@ -36,11 +36,11 @@ module F_Sharp_3_2 =
     | Empty
 
     let mapTree f tree = 
-        let rec mapTreeTR tree =
+        let rec map tree =
             match tree with
-            | Node(data, left, right) -> Node(f data, mapTreeTR left, mapTreeTR right)
+            | Node(data, left, right) -> Node(f data, map left, map right)
             | Empty -> Empty
-        mapTreeTR tree
+        map tree
     
     [<Test>]
     let ``Map the Tree [2, [1], [4, [3], [5]]] with pown by 2`` =
