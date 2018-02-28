@@ -56,7 +56,29 @@ module F_Sharp_3_2 =
                                     Node(25, Empty, Empty)))
 
         binTree |> mapTree (fun x -> pown x 2) |> should equal actualBinTree
-         
+
+module F_Sharp_3_3 =
+
+    type ArithmeticExpression<'a, 'f> =
+    | Operation of 'f * ArithmeticExpression<'a, 'f> * ArithmeticExpression<'a, 'f>
+    | Number of 'a
+
+    let countExpression arExp =
+        let rec countExpTR arExp =
+            match arExp with
+            | Operation(op, left, right) -> op <| countExpTR (left) <| countExpTR (right)
+            | Number(n) -> n
+        countExpTR arExp
+
+    [<Test>]
+    let ``Compute an arithmetic expression (1 + 2) * (4 + 10) + 40 should be equal 82`` =
+        let arExp = Operation((+), 
+                        Operation((*),
+                            Operation((+), Number(1), Number(2)),
+                            Operation((+), Number(4), Number(10))),
+                        Number(40))
+
+        arExp |> countExpression |> should equal 82
 
 [<EntryPoint>]
 let main argv =
