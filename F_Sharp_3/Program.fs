@@ -6,14 +6,21 @@ open FsUnit
 
 module F_Sharp_3_1 =
 
-    let countEvenNumbers list = 
-        let subListLength list = 
-            List.length list - (List.fold (+) 0 list)
-        list |> List.map (fun x -> x % 2) |> subListLength
+    module FirstOption = 
+        let countEvenNumbers list =            
+            list |> List.map (fun x -> if x % 2 = 0 then 1 else 0) |> List.fold (+) 0
 
-    [<Test>]
-    let ``Count even numbers of list [0 .. 10] should be equal 6`` =
-        [0 .. 10] |> countEvenNumbers |> should equal 6
+        [<Test>]
+        let ``Count even numbers of list [0 .. 10] should be equal 6`` =
+            [0 .. 10] |> countEvenNumbers |> should equal 6
+
+    module SecondOption = 
+        let countEvenNumbers list = 
+            list |> List.filter (fun x -> x % 2 = 0) |> List.length
+
+        [<Test>]
+        let ``Count even numbers of list [0 .. 10] should be equal 6`` =
+            [0 .. 10] |> countEvenNumbers |> should equal 6
 
 [<EntryPoint>]
 let main argv =
