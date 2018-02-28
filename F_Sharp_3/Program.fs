@@ -80,6 +80,29 @@ module F_Sharp_3_3 =
 
         arExp |> countExpression |> should equal 82
 
+module F_Sharp_3_4 =
+    
+    let infinitePrimeSeq = 
+        let isPrime n =
+            let rec check i =
+                i > n / 2 || (n % i <> 0 && check (i + 1))
+            check 2
+
+        let unlimitedMinimization prevPrime = 
+            let rec nextPrime i = 
+                if isPrime i then i else nextPrime (i + 2)
+            nextPrime (prevPrime + 2)
+
+        let rec infinitePrimeSeqFrom number =         
+            seq { yield number 
+                  yield! unlimitedMinimization number |> infinitePrimeSeqFrom}
+
+        Seq.append <| [ 2 ] <| infinitePrimeSeqFrom 3 
+
+    [<Test>]
+    let ``Take first 12 prime numbers its should be "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37"`` =
+        infinitePrimeSeq |> Seq.take 12 |> should equal [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37] 
+      
 [<EntryPoint>]
 let main argv =
     printfn "Hello World from F#!"
