@@ -59,8 +59,8 @@ module F_Sharp_3_2 =
 
 module F_Sharp_3_3 =
 
-    type ArithmeticExpression<'a, 'f> =
-    | Operation of 'f * ArithmeticExpression<'a, 'f> * ArithmeticExpression<'a, 'f>
+    type ArithmeticExpression<'a> =
+    | Operation of ('a -> 'a -> 'a) * ArithmeticExpression<'a> * ArithmeticExpression<'a>
     | Number of 'a
 
     let countExpression arExp =
