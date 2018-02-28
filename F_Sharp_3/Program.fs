@@ -22,6 +22,14 @@ module F_Sharp_3_1 =
         let ``Count even numbers of list [0 .. 10] should be equal 6`` =
             [0 .. 10] |> countEvenNumbers |> should equal 6
 
+    module ThirdOption = 
+        let countEvenNumbers list = 
+            list |> List.fold (fun acc x -> if x % 2 = 0 then acc + 1 else acc) 0
+
+        [<Test>]
+        let ``Count even numbers of list [0 .. 10] should be equal 6`` =
+            [0 .. 10] |> countEvenNumbers |> should equal 6
+
 [<EntryPoint>]
 let main argv =
     printfn "Hello World from F#!"
