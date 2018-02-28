@@ -49,13 +49,13 @@ module F_Sharp_3_2 =
                         Node(4,
                             Node(3, Empty, Empty),
                             Node(5, Empty, Empty)))
-        let actualBinTree = Node(4,
+        let expectedBinTree = Node(4,
                                 Node(1, Empty, Empty),
                                 Node(16,
                                     Node(9, Empty, Empty),
                                     Node(25, Empty, Empty)))
 
-        binTree |> mapTree (fun x -> pown x 2) |> should equal actualBinTree
+        binTree |> mapTree (fun x -> pown x 2) |> should equal expectedBinTree
          
 
 [<EntryPoint>]
