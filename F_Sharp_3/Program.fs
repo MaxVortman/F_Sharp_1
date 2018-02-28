@@ -64,11 +64,11 @@ module F_Sharp_3_3 =
     | Number of 'a
 
     let countExpression arExp =
-        let rec countExpTR arExp =
+        let rec countExp arExp =
             match arExp with
-            | Operation(op, left, right) -> op <| countExpTR (left) <| countExpTR (right)
+            | Operation(op, left, right) -> op <| countExp (left) <| countExp (right)
             | Number(n) -> n
-        countExpTR arExp
+        countExp arExp
 
     [<Test>]
     let ``Compute an arithmetic expression (1 + 2) * (4 + 10) + 40 should be equal 82`` =
