@@ -28,21 +28,6 @@ module F_Sharp_3_2 =
             | Node(data, left, right) -> Node(f data, map left, map right)
             | Empty -> Empty
         map tree
-    
-    [<Test>]
-    let ``Map the Tree [2, [1], [4, [3], [5]]] with pown by 2`` =
-        let binTree = Node(2,
-                        Node(1, Empty, Empty),
-                        Node(4,
-                            Node(3, Empty, Empty),
-                            Node(5, Empty, Empty)))
-        let expectedBinTree = Node(4,
-                                Node(1, Empty, Empty),
-                                Node(16,
-                                    Node(9, Empty, Empty),
-                                    Node(25, Empty, Empty)))
-
-        binTree |> mapTree (fun x -> pown x 2) |> should equal expectedBinTree
          
 
 [<EntryPoint>]
