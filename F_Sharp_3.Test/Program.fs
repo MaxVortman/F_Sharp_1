@@ -36,5 +36,10 @@ module ``3_2Tests`` =
 
         binTree |> mapTree (fun x -> pown x 2) |> should equal expectedBinTree
 
+    [<Test>]
+    let ``Map empty tree`` =
+        let emptyTree = BinaryTree<int>.Empty
+        emptyTree |> mapTree (fun x -> pown x 2) |> should equal emptyTree
+
 [<EntryPoint>]
 let main argv = 0 // return an integer exit code
