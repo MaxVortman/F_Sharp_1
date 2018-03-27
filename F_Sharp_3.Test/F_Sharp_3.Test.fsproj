@@ -9,4 +9,12 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FsUnit" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\F_Sharp_3\F_Sharp_3.fsproj" />
+  </ItemGroup>
+
 </Project>
