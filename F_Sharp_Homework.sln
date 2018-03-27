@@ -7,7 +7,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_1", "F_Sharp_1\F_Sh
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_2", "F_Sharp_2\F_Sharp_2.fsproj", "{637F127E-8AB0-457C-94B8-9264CADE7F19}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "F_Sharp_3", "F_Sharp_3\F_Sharp_3.fsproj", "{50D7E057-0B86-48FB-8BF0-63465905877E}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_3", "F_Sharp_3\F_Sharp_3.fsproj", "{50D7E057-0B86-48FB-8BF0-63465905877E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "F_Sharp_3.Test", "F_Sharp_3.Test\F_Sharp_3.Test.fsproj", "{AD169F82-41A0-4DC3-8D64-6509320F5ED8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{50D7E057-0B86-48FB-8BF0-63465905877E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50D7E057-0B86-48FB-8BF0-63465905877E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50D7E057-0B86-48FB-8BF0-63465905877E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
