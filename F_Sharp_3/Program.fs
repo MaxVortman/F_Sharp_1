@@ -1,8 +1,6 @@
 ﻿// Learn more about F# at http://fsharp.org
 
-open System
-
-module F_Sharp_3_1 =
+module F_Sharp_3_1
 
     module FirstOption = 
         let countEvenNumbers list =            
