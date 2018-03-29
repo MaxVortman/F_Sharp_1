@@ -84,8 +84,11 @@ module F_Sharp_3_4 =
     
     let infinitePrimeSeq = 
         let isPrime n =
+            let sqrtn = int (sqrt <| double n)
             let rec check i =
-                i > n / 2 || (n % i <> 0 && check (i + 1))
+                if i > sqrtn then true
+                elif n % i <> 0 then check (i + 1)
+                else false
             check 2
 
         let unlimitedMinimization prevPrime = 
@@ -105,5 +108,6 @@ module F_Sharp_3_4 =
       
 [<EntryPoint>]
 let main argv =
-    printfn "Hello World from F#!"
+    F_Sharp_3_4.infinitePrimeSeq |> Seq.iter (printf "%d ")
+    Console.ReadKey() |> ignore
     0 // return an integer exit code
