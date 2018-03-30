@@ -40,3 +40,23 @@ module ``3_2Tests`` =
     let ``Map empty tree``() =
         let emptyTree = BinaryTree<int>.Empty
         emptyTree |> mapTree (fun x -> pown x 2) |> should equal emptyTree
+
+module ``3_3Tests`` = 
+    open F_Sharp_3_3
+
+    [<Test>]
+    let ``Compute an arithmetic expression (1 + 2) * (4 + 10) + 40 should be equal 82``() =
+        let arExp = Operation((+), 
+                        Operation((*),
+                            Operation((+), Number(1), Number(2)),
+                            Operation((+), Number(4), Number(10))),
+                        Number(40))
+
+        arExp |> countExpression |> should equal 82
+
+module ``3_4Tests`` = 
+    open F_Sharp_3_4
+
+    [<Test>]
+    let ``Take first 12 prime numbers its should be "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37"``() =
+        infinitePrimeSeq |> Seq.take 12 |> should equal [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37] 
