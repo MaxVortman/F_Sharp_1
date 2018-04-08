@@ -8,4 +8,9 @@
     <Compile Include="Library.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="beta_redaction.tex" />
+    <None Include="SKK=I.tex" />
+  </ItemGroup>
+
 </Project>
