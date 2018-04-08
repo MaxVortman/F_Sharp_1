@@ -10,6 +10,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_3", "F_Sharp_3\F_Sh
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_3.Test", "F_Sharp_3.Test\F_Sharp_3.Test.fsproj", "{AD169F82-41A0-4DC3-8D64-6509320F5ED8}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "F_Sharp_4", "F_Sharp_4\F_Sharp_4.fsproj", "{852352B3-CEF5-4323-B5B0-9707A08B6593}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,18 @@ Global
 		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Release|x64.Build.0 = Release|Any CPU
 		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Release|x86.ActiveCfg = Release|Any CPU
 		{AD169F82-41A0-4DC3-8D64-6509320F5ED8}.Release|x86.Build.0 = Release|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Debug|x64.Build.0 = Debug|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Debug|x86.Build.0 = Debug|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Release|x64.ActiveCfg = Release|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Release|x64.Build.0 = Release|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Release|x86.ActiveCfg = Release|Any CPU
+		{852352B3-CEF5-4323-B5B0-9707A08B6593}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
