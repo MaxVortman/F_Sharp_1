@@ -4,7 +4,7 @@ open System
 
 
 let rec interactiveMode() = 
-    printfn "My Phonebook\n"
+    printfn "\nMy Phonebook\n"
     let ui = UIFactory.createUI
     ui.PrintCommands
     printfn "Enter a command or press Escape to exit...\n"

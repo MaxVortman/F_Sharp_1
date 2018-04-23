@@ -2,6 +2,7 @@
 
 open Phonebook
 open System
+open System.IO
 
 let createUI = 
     let mutable contactBook = new ContactBook()
@@ -23,7 +24,9 @@ let createUI =
                              printfn "Enter a name: "
                              let name = Console.ReadLine()
                              let contact = contactBook.FindByName name
-                             contact.Print
+                             match contact with
+                             | null -> printfn "Nobody with that name is here"
+                             | _ -> contact.Print                                                         
 
                          member this.Title: string = 
                              "2: Find contact by name"}
@@ -32,7 +35,9 @@ let createUI =
                              printfn "Enter a number: "
                              let number = Console.ReadLine()
                              let contact = contactBook.FindByNumber number
-                             contact.Print
+                             match contact with
+                             | null -> printfn "Nobody with that number is here"
+                             | _ -> contact.Print  
 
                          member this.Title: string = 
                               "3: Find contact by number"}
@@ -46,8 +51,11 @@ let createUI =
                          member this.Action(): unit = 
                              printfn "Enter a file full path: "
                              let path = Console.ReadLine()
-                             serializer.Serialize path contactBook
-                             printfn "Done!"
+                             try
+                                serializer.Serialize path contactBook
+                                printfn "Done!"
+                             with
+                             | :? IOException -> printfn "%s not found" path
 
                          member this.Title: string = 
                              "5: Save in file" }
@@ -55,8 +63,11 @@ let createUI =
                          member this.Action(): unit = 
                              printfn "Enter a file full path: "
                              let path = Console.ReadLine()
-                             contactBook <- serializer.Deserialize path
-                             printfn "Done!"
+                             try
+                                contactBook <- serializer.Deserialize path
+                                printfn "Done!"
+                             with 
+                             | :? IOException -> printfn "%s not found" path
 
                          member this.Title: string = 
                              "6: Read from file" }
