@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Contact.fs" />
     <Compile Include="ICommand.fs" />
     <Compile Include="UI.fs" />
     <Compile Include="UIFactory.fs" />
