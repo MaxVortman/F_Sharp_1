@@ -10,16 +10,16 @@ module ``1`` =
 
     let isCorrectBrSeq (str : string) (br : Brackets) = 
         let len = str.Length - 1
-        let rec count accOpen accClose ch i = 
+        let rec count acc ch i = 
             match ch with
-            | ch when i = len -> if ch = br.Open then (accOpen + 1, accClose)
-                                 elif ch = br.Close then (accOpen, accClose + 1)
-                                 else (accOpen, accClose)
-            | ch when ch = br.Open -> count (accOpen + 1) accClose str.[i + 1] (i + 1)
-            | ch when ch = br.Close -> count accOpen (accClose + 1) str.[i + 1] (i + 1)            
-            | _ -> count accOpen accClose str.[i + 1] (i + 1)
-        let (opens, closes) = count 0 0 str.[0] 0
-        if opens = closes then true
+            | ch when i = len -> if ch = br.Open then (acc + 1)
+                                 elif ch = br.Close then (acc - 1)
+                                 else acc
+            | ch when ch = br.Open -> count (acc + 1) str.[i + 1] (i + 1)
+            | ch when ch = br.Close -> count (acc - 1) str.[i + 1] (i + 1)            
+            | _ -> count acc str.[i + 1] (i + 1)
+        let acc = count 0 str.[0] 0
+        if acc = 0 then true
         else false
 
     let isCorrectRoundBrSeq str = 
