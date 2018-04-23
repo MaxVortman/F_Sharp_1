@@ -3,8 +3,8 @@
 open System.Linq
 
 type ContactBook() = 
-    member this.Contacts : Contact list = []
-    member this.Add contact = contact :: this.Contacts
+    member val Contacts : Contact list = [] with get, set
+    member this.Add contact = this.Contacts <- (contact :: this.Contacts)
     member this.FindByName name = this.Contacts.FirstOrDefault(fun c -> c.Name = name)
     member this.FindByNumber number = this.Contacts.FirstOrDefault(fun c -> c.Number = number)
     member this.Print = 

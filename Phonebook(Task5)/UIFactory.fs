@@ -14,7 +14,7 @@ let createUI =
                              printfn "Enter a phone number: "
                              let number = Console.ReadLine()
                              let contact = new Contact(name, number)
-                             contactBook.Add contact |> ignore
+                             contactBook.Add contact
 
                          member this.Title: string = 
                              "1: Add new contact"}

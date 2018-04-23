@@ -10,10 +10,12 @@ type UI() =
     
     member this.PrintCommands : unit = 
         let mutable enum = commands.Values.GetEnumerator()
-        let rec print cur = 
-            printfn "%A" cur
+        let rec print (cur : ICommand) = 
+            printfn "%s" cur.Title
             if enum.MoveNext() then print enum.Current
-        print enum.Current
+        if enum.MoveNext() then
+            print enum.Current
+        else ()
 
     member this.GetCommand key : ICommand = commands.[key]
     
