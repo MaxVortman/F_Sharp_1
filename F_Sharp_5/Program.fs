@@ -14,5 +14,6 @@ module ``2`` =
 
     let func'3 x = List.map ((*) x)
 
-    //сan I have more?
+    let func'4 : int -> int list -> int list = List.map << (*)
+
 

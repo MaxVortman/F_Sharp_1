@@ -8,4 +8,4 @@ open FsCheck.NUnit
 module ``2`` =
 
     [<Property>]
-    let ``point free test`` (x : int) (l : list<int>) = Generic_Tasks.``2``.func x l = Generic_Tasks.``2``.func'3 x l
+    let ``point free test`` (x : int) (l : list<int>) = Generic_Tasks.``2``.func x l = Generic_Tasks.``2``.func'4 x l
