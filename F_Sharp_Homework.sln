@@ -18,6 +18,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_5.Test", "F_Sharp_5
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Phonebook(Task5)", "Phonebook(Task5)\Phonebook(Task5).fsproj", "{62077EB4-3019-4E90-910F-F306B5ABE9E7}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Phonebook(Task5).Test", "Phonebook(Task5).Test\Phonebook(Task5).Test.fsproj", "{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,18 @@ Global
 		{62077EB4-3019-4E90-910F-F306B5ABE9E7}.Release|x64.Build.0 = Release|Any CPU
 		{62077EB4-3019-4E90-910F-F306B5ABE9E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{62077EB4-3019-4E90-910F-F306B5ABE9E7}.Release|x86.Build.0 = Release|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Debug|x64.Build.0 = Debug|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Debug|x86.Build.0 = Debug|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Release|x64.ActiveCfg = Release|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Release|x64.Build.0 = Release|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Release|x86.ActiveCfg = Release|Any CPU
+		{4FCF4C81-C827-4E4B-B2E8-8755D17CB6FC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
