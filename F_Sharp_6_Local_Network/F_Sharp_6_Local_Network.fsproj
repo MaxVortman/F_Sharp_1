@@ -60,10 +60,10 @@
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />
-    <Compile Include="Computer.fs" />
+    <Compile Include="Virus.fs" />
     <Compile Include="Antivirus.fs" />
     <Compile Include="OperatingSystem.fs" />
-    <Compile Include="Virus.fs" />
+    <Compile Include="Computer.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
