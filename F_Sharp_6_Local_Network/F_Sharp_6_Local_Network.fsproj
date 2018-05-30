@@ -57,13 +57,13 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="LevelEnum.fs" />
-    <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />
     <Compile Include="Virus.fs" />
     <Compile Include="Antivirus.fs" />
     <Compile Include="OperatingSystem.fs" />
     <Compile Include="Computer.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
