@@ -8,7 +8,6 @@ type Computer(operatingSystem : LocalNetwork.OperatingSystem) =
     let mutable isInfected = false
     let setVirus virus =    currentVirus <- virus
                             isInfected <- true 
-    member val Id : int = -1 with get, set
     member val OperatingSystem = operatingSystem with get
     member val IsInfected : bool = false with get
     member val Virus = currentVirus with get

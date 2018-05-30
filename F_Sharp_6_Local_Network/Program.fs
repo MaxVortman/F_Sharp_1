@@ -1,12 +1,32 @@
 ﻿module Start
 
 open System
+open LocalNetwork
 
-//let readComputersData =
-//    printfn "Enter a number of computers in local network"
-//    let n = Console.Read()
+let osArray = [|OS.Ubuntu; OS.WindowsXP; OS.Dos; OS.Windows7|]
+let antivirusArray = [|Antiviruses.Avast; Antiviruses.Avira; Antiviruses.Kaspersky; Antiviruses.Nod32|]
+let virusArray = [|Viruses.Conficker; Viruses.ILOVEYOU; Viruses.Slammer; Viruses.SW|]
 
-//    let readComputerData i = 
+let readComputersData =
+    printfn "Enter a number of computers in local network"
+    let n = Console.Read()
+
+    let createComputerObj osNumber antivirNumber = 
+        let os = osArray.[osNumber]
+        if os.InstallAntivirus antivirusArray.[antivirNumber] then
+            printfn "Antivirus installed!"
+        else printfn "Antivirus installation failed"
+        new Computer(os)
+
+    let rec readComputerData i acc= 
+        match i with
+        | 0 -> acc
+        | i ->  printfn "Enter a number of os and antivirus: "
+                let splitedLine = Console.ReadLine().Split()
+                let osNumber = int splitedLine.[0]
+                let antivirNumber = int splitedLine.[1]
+                readComputerData (i - 1) (createComputerObj osNumber antivirNumber :: acc)
+    readComputerData n []
         
 
 let readMatrix n =     
