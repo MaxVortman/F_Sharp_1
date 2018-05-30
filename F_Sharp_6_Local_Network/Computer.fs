@@ -3,7 +3,7 @@
 open System
 
 type Computer(operatingSystem : LocalNetwork.OperatingSystem) = 
-    let defaultVirus = Virus("None", "No one", "Not working virus", LevelEnum.None)
+    let defaultVirus = Virus("None", "Not working virus", LevelEnum.None)
     let mutable currentVirus = defaultVirus
     let mutable isInfected = false
     let setVirus virus =    currentVirus <- virus

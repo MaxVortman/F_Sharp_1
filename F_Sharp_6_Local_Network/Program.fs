@@ -2,6 +2,13 @@
 
 open System
 
+//let readComputersData =
+//    printfn "Enter a number of computers in local network"
+//    let n = Console.Read()
+
+//    let readComputerData i = 
+        
+
 let readMatrix n =     
     printfn "Now enter a %ix%i adjucency matrix" n n
     let rec readLine i acc = 

@@ -63,6 +63,7 @@
     <Compile Include="Antivirus.fs" />
     <Compile Include="OperatingSystem.fs" />
     <Compile Include="Computer.fs" />
+    <Compile Include="Seeder.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
