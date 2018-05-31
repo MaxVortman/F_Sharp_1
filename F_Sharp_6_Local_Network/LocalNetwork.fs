@@ -2,11 +2,11 @@
 
 open System.Linq
 
-type LocalNetwork(computers : Computer[], adjacencyMatrix : int[] list) =
+type LocalNetwork(computers : Computer list, adjacencyMatrix : int[] list) =
     let mutable infectedComputers : Computer list = []
     member val Computers = computers with get
     member val AdjacencyMatrix = adjacencyMatrix with get
-    member this.Infect id virus =   let computer : Computer = this.Computers.Where(fun c -> c.Id = id).FirstOrDefault()
+    member this.Infect id virus =   let computer : Computer = computers.Where(fun c -> c.Id = id).FirstOrDefault()
                                     computer.Infect virus
                                     infectedComputers <- computer :: infectedComputers
     member this.MoveStep = 
@@ -29,10 +29,9 @@ type LocalNetwork(computers : Computer[], adjacencyMatrix : int[] list) =
         infectedComputersTravesal infectedComputers
 
     member this.PrintInfo =
-        let n = computers.Length
-        let rec computersTravesal i = 
-            match i with
-            | i when i = n ->   ()
-            | i ->              printfn "%O" computers.[i]
-                                computersTravesal (i + 1)
-        computersTravesal 0
+        let rec computersTravesal computers = 
+            match computers with
+            | h :: t    ->     printfn "%O" h
+                               computersTravesal t
+            | []        ->     ()            
+        computersTravesal computers

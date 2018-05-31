@@ -33,16 +33,19 @@ let readMatrix n =
     printfn "Now enter a %ix%i adjucency matrix" n n
     let rec readLine i acc = 
         match i with
-        | 0 -> acc  
+        | 0 ->  acc  
         | i ->  let splitedLine = Array.ConvertAll(Console.ReadLine().Split(), fun s -> int s)
                 readLine (i - 1) (splitedLine :: acc)
     readLine n []
 
 [<EntryPoint>]
 let main argv = 
-    printfn "Enter a number of computers in local network"
-    let n = Console.Read()
-    let computers = readComputersData n
-    let matrix = readMatrix n
+    let createLN () = 
+        printfn "Enter a number of computers in local network"
+        let n = Console.Read()
+        let computers = readComputersData n
+        let matrix = readMatrix n
+        new LocalNetwork.LocalNetwork(computers, matrix)
+    
 
     0 // return an integer exit code
