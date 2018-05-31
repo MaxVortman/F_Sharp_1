@@ -9,7 +9,7 @@ type LocalNetwork(computers : Computer[], adjacencyMatrix : int[] list) =
     member this.Infect id virus =   let computer : Computer = this.Computers.Where(fun c -> c.Id = id).FirstOrDefault()
                                     computer.Infect virus
                                     infectedComputers <- computer :: infectedComputers
-    member this.Move = 
+    member this.MoveStep = 
         let matrixTravesal id virus = 
             let n = this.AdjacencyMatrix.[id].Length
             let rec secondLayerTravesal i = 
@@ -27,3 +27,12 @@ type LocalNetwork(computers : Computer[], adjacencyMatrix : int[] list) =
                         infectedComputersTravesal t
             | [] -> ()
         infectedComputersTravesal infectedComputers
+
+    member this.PrintInfo =
+        let n = computers.Length
+        let rec computersTravesal i = 
+            match i with
+            | i when i = n ->   ()
+            | i ->              printfn "%O" computers.[i]
+                                computersTravesal (i + 1)
+        computersTravesal 0
