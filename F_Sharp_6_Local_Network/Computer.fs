@@ -10,10 +10,10 @@ type Computer(id : int, operatingSystem : LocalNetwork.OperatingSystem) =
                             isInfected <- true 
     member val Id = id with get
     member val OperatingSystem = operatingSystem with get
-    member val IsInfected : bool = false with get
-    member val Virus = currentVirus with get
+    member this.IsInfected = isInfected
+    member this.Virus = currentVirus
     member this.Infect (virus : Virus) = 
-        let infectionProbability =  int (this.OperatingSystem.HoleLevel + virus.TruePower - this.OperatingSystem.Antivirus.SecureLevel) % 100        
+        let infectionProbability =  int (this.OperatingSystem.HoleLevel + virus.TruePower - this.OperatingSystem.Antivirus.SecureLevel)        
         let rnd_value = let rnd = new System.Random()
                         rnd.Next(1, 100)
         if rnd_value <= infectionProbability then setVirus virus

@@ -12,7 +12,7 @@ type OperatingSystem(name : string, description : string, author : string, holeL
     member val Description = description with get
     member val Author = author with get
     member val HoleLevel = holeLevel with get
-    member val Antivirus = antivirus with get
+    member this.Antivirus = antivirus
 
     member this.InstallAntivirus ?newAntivirus = 
         antivirus <- defaultArg newAntivirus defaultAntivirus

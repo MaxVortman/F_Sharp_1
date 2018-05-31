@@ -4,12 +4,12 @@ open System.Linq
 
 type LocalNetwork(computers : Computer list, adjacencyMatrix : int[] list) =
     let mutable infectedComputers : Computer list = []
-    member val Computers = computers with get
+    member this.Computers = computers
     member val AdjacencyMatrix = adjacencyMatrix with get
     member this.Infect id virus =   let computer : Computer = computers.Where(fun c -> c.Id = id).FirstOrDefault()
                                     computer.Infect virus
                                     infectedComputers <- computer :: infectedComputers
-    member this.MoveStep = 
+    member this.MoveStep () = 
         let matrixTravesal id virus = 
             let n = this.AdjacencyMatrix.[id].Length
             let rec secondLayerTravesal i = 

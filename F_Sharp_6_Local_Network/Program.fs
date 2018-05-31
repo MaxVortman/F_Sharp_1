@@ -18,13 +18,13 @@ let readComputersData n =
 
     let rec readComputerData i acc= 
         match i with
-        | 0 -> acc
+        | i when i = n -> acc
         | i ->  printfn "Enter a number of os and antivirus: "
                 let splitedLine = Console.ReadLine().Split()
                 let osNumber = int splitedLine.[0]
                 let antivirNumber = int splitedLine.[1]
-                readComputerData (i - 1) (createComputerObj i osNumber antivirNumber :: acc)
-    readComputerData n []
+                readComputerData (i + 1) (createComputerObj i osNumber antivirNumber :: acc)
+    readComputerData 0 []
         
 
 let readMatrix n =     
@@ -72,7 +72,7 @@ let main argv =
                                             loop ()
         | 4 ->                              localNetwork <- Some(createLN ())
                                             loop ()
-        | 5 when localNetwork <> None ->    localNetwork.Value.MoveStep
+        | 5 when localNetwork <> None ->    localNetwork.Value.MoveStep ()
                                             loop ()
         | 6 when localNetwork <> None ->    localNetwork.Value.PrintInfo
                                             loop ()
