@@ -2,12 +2,13 @@
 
 open System
 
-type Computer(operatingSystem : LocalNetwork.OperatingSystem) = 
+type Computer(id : int, operatingSystem : LocalNetwork.OperatingSystem) = 
     let defaultVirus = Virus("None", "Not working virus", LevelEnum.None)
     let mutable currentVirus = defaultVirus
     let mutable isInfected = false
     let setVirus virus =    currentVirus <- virus
                             isInfected <- true 
+    member val Id = id with get
     member val OperatingSystem = operatingSystem with get
     member val IsInfected : bool = false with get
     member val Virus = currentVirus with get
