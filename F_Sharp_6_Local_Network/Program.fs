@@ -8,14 +8,12 @@ let antivirusArray = [|Antiviruses.Avast; Antiviruses.Avira; Antiviruses.Kaspers
 let virusArray = [|Viruses.Conficker; Viruses.ILOVEYOU; Viruses.Slammer; Viruses.SW|]
 
 
-
 let readComputersData n =
 
     let createComputerObj i osNumber antivirNumber = 
         let os = osArray.[osNumber]
-        if os.InstallAntivirus antivirusArray.[antivirNumber] then
-            printfn "Antivirus installed!"
-        else printfn "Antivirus installation failed"
+        os.InstallAntivirus antivirusArray.[antivirNumber]
+        printfn "Antivirus installed!"
         new Computer(i, os)
 
     let rec readComputerData i acc= 
@@ -42,10 +40,44 @@ let readMatrix n =
 let main argv = 
     let createLN () = 
         printfn "Enter a number of computers in local network"
-        let n = Console.Read()
+        let n = int (Console.ReadLine())
         let computers = readComputersData n
         let matrix = readMatrix n
         new LocalNetwork.LocalNetwork(computers, matrix)
-    
 
+    let printArray (arr : array<'a>) = 
+        let n = arr.Length
+        let rec print i = 
+            match i with
+            | i when i = n ->   ()
+            | i ->              printfn "%i - %O" i arr.[i]
+                                print (i + 1)
+        print 0
+
+    let mutable localNetwork : Option<LocalNetwork.LocalNetwork> = None
+
+    let rec loop () =        
+        printfn "1 - display available operating systems\n2 - display available antiviruses\n3 - display available viruses\n4 - create new local network"
+        if localNetwork <> None then
+            printfn "5 - move\n6 - print info"
+        printfn "7 - exit"
+        let x = int (Console.ReadLine())
+        Console.Clear() |> ignore
+        match x with
+        | 1 ->                              printArray osArray
+                                            loop ()
+        | 2 ->                              printArray antivirusArray
+                                            loop ()
+        | 3 ->                              printArray virusArray
+                                            loop ()
+        | 4 ->                              localNetwork <- Some(createLN ())
+                                            loop ()
+        | 5 when localNetwork <> None ->    localNetwork.Value.MoveStep
+                                            loop ()
+        | 6 when localNetwork <> None ->    localNetwork.Value.PrintInfo
+                                            loop ()
+        | 7 ->                              ()
+        | _ ->                              printfn "Wrong number!"
+                                            loop ()
+    loop ()
     0 // return an integer exit code

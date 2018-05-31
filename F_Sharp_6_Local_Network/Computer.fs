@@ -17,4 +17,4 @@ type Computer(id : int, operatingSystem : LocalNetwork.OperatingSystem) =
         let rnd_value = let rnd = new System.Random()
                         rnd.Next(1, 100)
         if rnd_value <= infectionProbability then setVirus virus
-    override this.ToString() = String.Format("Id {0}\Operation System:\n{1}\nVirus:\n{2}%", this.Id, this.OperatingSystem, this.Virus)
+    override this.ToString() = String.Format("Id {0}\nOperation System:\n{1}\nVirus:\n{2}%", this.Id, this.OperatingSystem, this.Virus)
