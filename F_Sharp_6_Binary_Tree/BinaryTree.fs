@@ -22,11 +22,11 @@ type BST<'a, 'b when 'a : comparison> ()  =
             | Some(value) ->                        find value.Left node
         find root None
 
-    let rec minimum (root : Node<'a, 'b> option) =
+    let rec minimum (root : Node<'a, 'b> option) (parent : Node<'a, 'b> option) =
         match root with
-        | None ->                                   None
-        | Some(value) when value.Left <> None ->    minimum value.Left
-        | Some(_) ->                                root
+        | None ->                                   None, parent
+        | Some(value) when value.Left <> None ->    minimum value.Left root
+        | Some(_) ->                                root, parent
     
     let treeTravesal() =
         let rec travesal (node : Node<'a, 'b> option) =
@@ -54,25 +54,49 @@ type BST<'a, 'b when 'a : comparison> ()  =
     member this.Remove key =
         let removeNode (parent : Node<'a, 'b> option) (nodeValue : Node<'a, 'b>) =   
             match parent with
-            | None -> false
+            | None ->                                                   root <- None
+                                                                        true
             | Some(parentValue) when parentValue.Key < nodeValue.Key -> parentValue.Right <- None
                                                                         true
             | Some(parentValue) ->                                      parentValue.Left <- None
                                                                         true
-        let replaceNode (fromNodeValue : Node<'a, 'b>) (toNodeValue : Node<'a, 'b> option) (parent : Node<'a, 'b> option) = 
+        let replaceNodeWithOneChild (fromNodeValue : Node<'a, 'b>) (toNode : Node<'a, 'b> option) (parent : Node<'a, 'b> option) = 
             match parent with
-            | None -> false
-            | Some(parentValue) when parentValue.Key < fromNodeValue.Key -> parentValue.Right <- toNodeValue
+            | None ->                                                       root <- toNode
                                                                             true
-            | Some(parentValue) ->                                          parentValue.Left <- toNodeValue
+            | Some(parentValue) when parentValue.Key < fromNodeValue.Key -> parentValue.Right <- toNode
                                                                             true
+            | Some(parentValue) ->                                          parentValue.Left <- toNode
+                                                                            true
+                                               
+        let replaceNodeWithTwoChild (fromNodeValue : Node<'a, 'b>) (toNode : Node<'a, 'b> option) (parent : Node<'a, 'b> option) =
+            match toNode with
+            | None ->               false
+            | Some(toNodeValue) ->  let newNode = new Node<'a, 'b>(toNodeValue.Key, toNodeValue.Value)
+                                    if fromNodeValue.Right <> toNode  then
+                                        newNode.Right <- fromNodeValue.Right
+                                    if fromNodeValue.Left <> toNode then
+                                        newNode.Left <- fromNodeValue.Left
+                                    match parent with 
+                                    | None ->                                                       root <- Some(newNode)
+                                                                                                    true
+                                    | Some(parentValue) when parentValue.Key < fromNodeValue.Key -> parentValue.Right <- Some(newNode)
+                                                                                                    true
+                                    | Some(parentValue) ->                                          parentValue.Left <- Some(newNode)
+                                                                                                    true
+
         let (node, parent) = findNode key
-        match node with
-        | None ->           false
-        | Some(nodeValue) when nodeValue.Right = None && nodeValue.Left = None ->   removeNode parent nodeValue
-        | Some(nodeValue) when nodeValue.Right = None ->                            replaceNode nodeValue nodeValue.Left parent
-        | Some(nodeValue) when nodeValue.Left = None ->                             replaceNode nodeValue nodeValue.Right parent
-        | Some(nodeValue) ->                                                        replaceNode nodeValue (minimum nodeValue.Right) parent
+        let rec remove (node : Node<'a, 'b> option) parent = 
+            match node with
+            | None ->                                                                   false
+            | Some(nodeValue) when nodeValue.Right = None && nodeValue.Left = None ->   removeNode parent nodeValue
+            | Some(nodeValue) when nodeValue.Right = None ->                            replaceNodeWithOneChild nodeValue nodeValue.Left parent
+            | Some(nodeValue) when nodeValue.Left = None ->                             replaceNodeWithOneChild nodeValue nodeValue.Right parent
+            | Some(nodeValue) ->                                                        let (toNode, toNodeParent) = minimum nodeValue.Right node
+                                                                                        match replaceNodeWithTwoChild nodeValue toNode parent with
+                                                                                        | true -> remove toNode toNodeParent
+                                                                                        | false -> false                                                                                        
+        remove node parent
 
     interface IEnumerable<Node<'a, 'b>> with
         member this.GetEnumerator(): IEnumerator<Node<'a, 'b>> = 
