@@ -1,9 +1,10 @@
 ﻿namespace F_Sharp_6_Binary_Tree
 
-open System.Collections
+open System.Collections.Generic
+open System
 
 
-type Node<'a, 'b> (key, value, right, left) =
+type Node<'a, 'b> (key : 'a, value : 'b, right, left) =
     member val Key = key with get
     member val Value = value with get
     member val Right : Node<'a, 'b> option = right with get, set
@@ -26,7 +27,16 @@ type BST<'a, 'b when 'a : comparison> ()  =
         | None ->                                   None
         | Some(value) when value.Left <> None ->    minimum value.Left
         | Some(_) ->                                root
-
+    
+    let treeTravesal() =
+        let rec travesal (node : Node<'a, 'b> option) =
+            match node with
+            | None -> Seq.empty
+            | Some(value) ->  seq { yield!  travesal value.Left
+                                    yield   value
+                                    yield!  travesal value.Right }
+        travesal root
+    
     member this.Add key value = 
         let rec add (node : Node<'a, 'b> option) =
             match node with
@@ -63,3 +73,10 @@ type BST<'a, 'b when 'a : comparison> ()  =
         | Some(nodeValue) when nodeValue.Right = None ->                            replaceNode nodeValue nodeValue.Left parent
         | Some(nodeValue) when nodeValue.Left = None ->                             replaceNode nodeValue nodeValue.Right parent
         | Some(nodeValue) ->                                                        replaceNode nodeValue (minimum nodeValue.Right) parent
+
+    interface IEnumerable<Node<'a, 'b>> with
+        member this.GetEnumerator(): IEnumerator<Node<'a, 'b>> = 
+            let seq = treeTravesal()
+            seq.GetEnumerator()
+        member this.GetEnumerator(): System.Collections.IEnumerator = 
+            (this:>IEnumerable<Node<'a, 'b>>).GetEnumerator():>System.Collections.IEnumerator
