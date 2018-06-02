@@ -39,7 +39,7 @@ module BinarySearchTreeTests =
         | false -> failwith "Didn't remove leaf"
 
     [<Test>]
-    let ``should remove root and take new root (left leaf)``() =
+    let ``should remove root and take new root (right leaf)``() =
         let binTree = bst()
         match binTree.Remove 1 with
         | true ->   let enumerator = (binTree :> IEnumerable<Node<int, string>>).GetEnumerator()
