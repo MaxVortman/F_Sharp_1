@@ -18,6 +18,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F_Sharp_5.Test", "F_Sharp_5
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "F_Sharp_Homework_7", "F_Sharp_Homework_7\F_Sharp_Homework_7.fsproj", "{9CC44480-70B3-44F9-A1FF-BFD4B32827B4}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "F_Sharp_Homework_7.Test", "F_Sharp_Homework_7.Test\F_Sharp_Homework_7.Test.fsproj", "{CD04DBF2-480C-4222-A4F8-014C40AA6E48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,18 @@ Global
 		{9CC44480-70B3-44F9-A1FF-BFD4B32827B4}.Release|x64.Build.0 = Release|Any CPU
 		{9CC44480-70B3-44F9-A1FF-BFD4B32827B4}.Release|x86.ActiveCfg = Release|Any CPU
 		{9CC44480-70B3-44F9-A1FF-BFD4B32827B4}.Release|x86.Build.0 = Release|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Debug|x64.Build.0 = Debug|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Debug|x86.Build.0 = Debug|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Release|x64.ActiveCfg = Release|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Release|x64.Build.0 = Release|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Release|x86.ActiveCfg = Release|Any CPU
+		{CD04DBF2-480C-4222-A4F8-014C40AA6E48}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
