@@ -60,6 +60,7 @@
     <Compile Include="RoundingMonadTests.fs" />
     <None Include="Script.fsx" />
     <Content Include="packages.config" />
+    <Compile Include="StringToIntMonadTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">

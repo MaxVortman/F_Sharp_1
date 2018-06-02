@@ -55,7 +55,7 @@
     <Compile Include="RoundingMonad.fs" />
     <None Include="Script.fsx" />
     <Content Include="packages.config" />
-    <Compile Include="StringAddMonad.fs" />
+    <Compile Include="StringToIntMonad.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
