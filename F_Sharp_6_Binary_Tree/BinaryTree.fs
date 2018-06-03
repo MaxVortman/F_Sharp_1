@@ -37,13 +37,15 @@ type BST<'a, 'b when 'a : comparison> ()  =
                                     yield!  travesal value.Right }
         travesal root
     
-    member this.Add key value = 
+    member this.Add key value =         
         let rec add (node : Node<'a, 'b> option) =
             match node with
             | None ->                                   Some(new Node<'a, 'b>(key, value))
             | Some(value) when value.Key < key ->       Some(new Node<'a, 'b>(value.Key, value.Value, add value.Right, value.Left))
             | Some(value) ->                            Some(new Node<'a, 'b>(value.Key, value.Value, value.Right, add value.Left))
-        root <- add root
+        match this.Find key with
+        | None -> root <- add root
+        | Some(_) -> raise (ArgumentException("There is already such a key"))
 
     member this.Find key =
         let (node, parent) = findNode key

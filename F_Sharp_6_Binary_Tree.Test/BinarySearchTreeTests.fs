@@ -6,6 +6,7 @@ open F_Sharp_6_Binary_Tree
 
 module BinarySearchTreeTests =
     open System.Collections.Generic
+    open System
 
     [<Test>]
     let ``should add elem 10 with key 1`` () =
@@ -47,3 +48,8 @@ module BinarySearchTreeTests =
                     | true ->   enumerator.Current.Value |> should equal "right leaf"
                     | false ->  failwith "Didn't move"
         | false ->  failwith "Didn't remove leaf"
+
+    [<Test>]
+    let ``should throw ArgumentException``() =
+        let binTree = bst()        
+        (fun () -> binTree.Add 2 "new right leaf" |> ignore) |> should throw typeof<ArgumentException>
