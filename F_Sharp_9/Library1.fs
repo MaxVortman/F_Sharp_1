@@ -1,13 +1,14 @@
-﻿module F_Sharp_9
+﻿namespace F_Sharp_9
 
 open System.Threading
+open System
 
     type ILazy<'a> =
         abstract member Get: unit -> 'a
 
-    type LazyFactory () = 
-        static let mutable instance = None
-
+    type LazyFactory<'a when 'a : equality> () = 
+        static let mutable instance : 'a option = None
+        static let lockObj = new Object()
         static member CreateSingleThreadedLazy           supplier =
             match instance with
             | None ->       let newInstance = supplier ()
@@ -19,21 +20,20 @@ open System.Threading
         static member CreateMultiThreadedLazy            supplier =
             
             match instance with
-            | None ->       lock instance (fun() -> 
+            | None ->       lock lockObj (fun() -> 
                                                     let newInstance = supplier ()
                                                     instance <- Some(newInstance)
                                                     newInstance)
             | Some(v) ->    v
                 
         static member CreateLockFreeMultiThreadedLazy    supplier =
-            let mutable initialValue = None
-            let rec CAS () =               
+            let rec CAS () =
+                let currentValue = instance
                 let computedValue = supplier ()
-                initialValue <- instance
-                match Interlocked.CompareExchange(ref instance, Some(computedValue), initialValue) = initialValue with
+                match Interlocked.CompareExchange(&instance, Some(computedValue), currentValue) = currentValue with
                 | true ->   computedValue
-                | false ->  CAS()
+                | false ->  Thread.SpinWait 10
+                            CAS()
             match instance with
-            | None -> CAS()
-            | Some(v) -> v
-                    
+            | None ->       CAS()
+            | Some(v) ->    v
