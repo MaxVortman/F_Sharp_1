@@ -7,6 +7,7 @@ open F_Sharp_6_Binary_Tree
 module BinarySearchTreeTests =
     open System.Collections.Generic
     open System
+    open NUnit.Framework.Internal
 
     [<Test>]
     let ``should add elem 10 with key 1`` () =
@@ -53,3 +54,25 @@ module BinarySearchTreeTests =
     let ``should throw ArgumentException``() =
         let binTree = bst()        
         (fun () -> binTree.Add 2 "new right leaf" |> ignore) |> should throw typeof<ArgumentException>
+
+    [<Test>]
+    let ``should remove node wuth not simple children`` () = 
+        let hardBST = 
+            let binTree = new BST<int, string>()
+            binTree.Add 1 "root"
+            binTree.Add 3 "right node"
+            binTree.Add 0 "left node"
+            binTree.Add -1 "left left node"
+            binTree.Add 2 "right left node"
+            binTree.Add 4 "right right node"
+            binTree
+        match hardBST.Remove 1 with 
+        | true ->   hardBST.Find 1 |> should equal None                    
+        | false ->  failwith "Didn't remove root"
+
+    [<Test>]
+    let ``should check IEnumerable`` () =
+        let binTree = bst()
+        (binTree :> IEnumerable<Node<int, string>>) |>
+        Seq.cast |> Seq.filter (fun (x : Node<int, string>) -> x.Value = "right leaf") |>
+        Seq.length |> should equal 1

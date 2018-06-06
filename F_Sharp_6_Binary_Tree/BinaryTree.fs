@@ -3,7 +3,9 @@
 open System.Collections.Generic
 open System
 
-
+/// <summary>
+/// Узел дерева
+/// </summary>
 type Node<'a, 'b> (key : 'a, value : 'b, right, left) =
     member val Key = key with get
     member val Value = value with get
@@ -11,6 +13,9 @@ type Node<'a, 'b> (key : 'a, value : 'b, right, left) =
     member val Left : Node<'a, 'b> option = left with get, set
     new(key, value) = Node<'a, 'b>(key, value, None, None)
 
+/// <summary>
+/// Двоичное дерево поиска
+/// </summary>
 type BST<'a, 'b when 'a : comparison> ()  = 
     let mutable root : Node<'a, 'b> option = None
     let findNode key = 
@@ -36,7 +41,11 @@ type BST<'a, 'b when 'a : comparison> ()  =
                                     yield   value
                                     yield!  travesal value.Right }
         travesal root
-    
+    /// <summary>
+    /// Добавление значения по ключу в дерево
+    /// </summary>
+    /// <param name="key">ключ</param>
+    /// <param name="value">значение</param>
     member this.Add key value =         
         let rec add (node : Node<'a, 'b> option) =
             match node with
@@ -46,13 +55,19 @@ type BST<'a, 'b when 'a : comparison> ()  =
         match this.Find key with
         | None -> root <- add root
         | Some(_) -> raise (ArgumentException("There is already such a key"))
-
+    /// <summary>
+    /// Поиск значения по ключу
+    /// </summary>
+    /// <param name="key">ключ</param>
     member this.Find key =
         let (node, parent) = findNode key
         match node with
         | None ->           None
         | Some(value) ->    Some(value.Value)
-
+    /// <summary>
+    /// Удаление узла по ключу
+    /// </summary>
+    /// <param name="key">ключ</param>
     member this.Remove key =
         let removeNode (parent : Node<'a, 'b> option) (nodeValue : Node<'a, 'b>) =   
             match parent with
@@ -99,10 +114,17 @@ type BST<'a, 'b when 'a : comparison> ()  =
                                                                                         | true -> remove toNode toNodeParent
                                                                                         | false -> false                                                                                        
         remove node parent
-
+    
+    
     interface IEnumerable<Node<'a, 'b>> with
+        /// <summary>
+        /// Получение enumerator-a дерева
+        /// </summary>
         member this.GetEnumerator(): IEnumerator<Node<'a, 'b>> = 
             let seq = treeTravesal()
             seq.GetEnumerator()
+        /// <summary>
+        /// Получение enumerator-a дерева
+        /// </summary>
         member this.GetEnumerator(): System.Collections.IEnumerator = 
             (this:>IEnumerable<Node<'a, 'b>>).GetEnumerator():>System.Collections.IEnumerator
