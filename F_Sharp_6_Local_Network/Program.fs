@@ -32,7 +32,9 @@ let readMatrix n =
     let rec readLine i acc = 
         match i with
         | 0 ->  acc  
-        | i ->  let splitedLine = Array.ConvertAll(Console.ReadLine().Split(), fun s -> int s)
+        | i ->  let splitedLine = Array.ConvertAll(Console.ReadLine().Split(), fun s -> match int s with                                                                                        
+                                                                                        | 0 -> false
+                                                                                        | _ -> true)
                 readLine (i - 1) (splitedLine :: acc)
     readLine n []
 

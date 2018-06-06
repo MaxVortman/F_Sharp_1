@@ -20,8 +20,8 @@ module LocalNetworkTest =
         let computers = [new Computer(0, os); new Computer(1, os)]
         let matrix = 
             [
-            [|0; 1|];
-            [|0; 0|]
+            [|false; true|];
+            [|false; false|]
             ]
         new LocalNetwork(computers, matrix)
     
