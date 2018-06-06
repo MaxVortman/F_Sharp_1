@@ -13,3 +13,25 @@ module RoundingMonadTests =
             return a / b
         }
         res |> should equal 0.048
+
+    [<Test>]
+    let ``should round to 0 digits`` () =
+        let res = rounding 0 {
+            //это 0
+            let! a = 1. / 3.
+            let! b = 3.
+            //0 * 3 = 0
+            return a * b
+        }
+        res |> should equal 0.
+
+    [<Test>]
+    let ``should round to 1 digits`` () =
+        let res = rounding 1 {
+            //это 0.3
+            let! a = 1. / 3.
+            let! b = 3.
+            //0.3 * 3 = 0.9
+            return a * b
+        }
+        res |> should equal 0.9
