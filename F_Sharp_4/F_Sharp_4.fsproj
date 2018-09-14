@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="beta_redaction.tex" />
+    <None Include="beta_reduction.tex" />
     <None Include="SKK=I.tex" />
   </ItemGroup>
 
