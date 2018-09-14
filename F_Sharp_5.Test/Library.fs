@@ -37,3 +37,7 @@ module ``1`` =
     [<Test>]
     let ``should be incorrect at sample (square) : "{FloatingPointNumerics.ReinterpretAsDouble+ds(2 + 5)}]dsdf]ytr][["`` () = 
         "{FloatingPointNumerics.ReinterpretAsDouble+ds(2 + 5)}]dsdf]ytr][[" |> Generic_Tasks.``1``.isCorrectSquareBrSeq |> should equal false
+
+    [<Test>]
+    let ``should be incorrect at sample: "[(])"`` () = 
+        "[(])" |> Generic_Tasks.``1``.isCorrectSquareBrSeq |> should equal false
