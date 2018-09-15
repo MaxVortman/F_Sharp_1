@@ -1,4 +1,4 @@
-﻿namespace Generic_Tasks
+﻿namespace GenericTasks
 
 module ``1`` =
 
@@ -8,35 +8,30 @@ module ``1`` =
             Close : char
         }
 
-    let isCorrectBrSeq (str : string) (br : Brackets) = 
-        let len = str.Length - 1
-        let rec count acc ch i =
-            //must help with samples kinda "] 5 + 1 ["
-            if acc < 0 then acc
-            else
-            match ch with
-            | ch when i = len -> if ch = br.Open then (acc + 1)
-                                 elif ch = br.Close then (acc - 1)
-                                 else acc
-            | ch when ch = br.Open -> count (acc + 1) str.[i + 1] (i + 1)
-            | ch when ch = br.Close -> count (acc - 1) str.[i + 1] (i + 1)            
-            | _ -> count acc str.[i + 1] (i + 1)
-        if len < 0 then true else
-        let acc = count 0 str.[0] 0
-        if acc = 0 then true
-        else false
-
-    let isCorrectRoundBrSeq str = 
-        let roundBr = {Open = '(';
+    let roundBr = {Open = '(';
                        Close = ')'}
-        isCorrectBrSeq str roundBr
-
-    let isCorrectSquareBrSeq str =
-        let squareBr = {Open = '[';
+    let squareBr = {Open = '[';
                         Close = ']'}
-        isCorrectBrSeq str squareBr
-    
-    let isCorrectBracesSeq str =
-        let braces = {Open = '{';
+    let braces = {Open = '{';
                         Close = '}'}
-        isCorrectBrSeq str braces
+
+    exception IncorrectBracketsSeqException
+
+    let isCorrectSeq (str : string) = 
+        let brackets = [roundBr; squareBr; braces]
+        let rec travesol stack s =
+            let stackModify (ch : char) (br : Brackets) =
+                match ch with 
+                | _ when ch = br.Open -> br.Close :: stack
+                | _ when br.Close = ch && List.head stack = ch -> List.tail stack
+                | _ when ch = br.Close -> raise IncorrectBracketsSeqException
+                | _ -> stack
+            match s with
+            | h :: t when List.exists (fun (br : Brackets) -> br.Open = h || br.Close = h) brackets -> 
+                                            travesol (stackModify h (brackets |> List.find (fun (br : Brackets) -> br.Open = h || br.Close = h))) t
+            | _ :: t -> travesol stack t
+            | _ -> stack.IsEmpty 
+        try
+            travesol [] (Seq.toList str)
+        with 
+        | IncorrectBracketsSeqException -> false
