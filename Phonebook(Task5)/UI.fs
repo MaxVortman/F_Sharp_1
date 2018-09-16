@@ -3,19 +3,13 @@
 open System.Collections.Generic
 
 type UI() = 
-
-    let mutable commands : Dictionary<int, ICommand> = new Dictionary<int, ICommand>()
+    let commands : IDictionary<int, ICommand> = dict[]
     member this.AddCommand key command : unit = 
         commands.Add(key, command)
     
-    member this.PrintCommands : unit = 
-        let mutable enum = commands.Values.GetEnumerator()
-        let rec print (cur : ICommand) = 
-            printfn "%s" cur.Title
-            if enum.MoveNext() then print enum.Current
-        if enum.MoveNext() then
-            print enum.Current
-        else ()
+    member this.PrintCommands : unit =
+        for KeyValue(k, v) in commands do
+            printfn "%s" v.Title
 
     member this.GetCommand key : ICommand = commands.[key]
     
