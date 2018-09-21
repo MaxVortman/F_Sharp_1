@@ -26,8 +26,8 @@ let normalize (sourceTerm : Term) =
     let depth (a : Term) =
         let rec depthInternal acc (f : Term) =
             match f with
-            |Application(l, r) -> depthInternal (acc + 1) l
-            |Abstraction(c, x) -> depthInternal (acc + 1) x
+            |Application(l, r) -> depthInternal (acc + 1) l + depthInternal 0 r
+            |Abstraction(_, x) -> depthInternal (acc + 1) x
             |_ -> acc
         depthInternal 0 a
 
