@@ -40,15 +40,13 @@ let normalize (sourceTerm : Term) =
         |_ -> raise NormalizedFormNotFoundException 
 
     let substitution (ch : string) (destinationTerm : Term) (term : Term) = 
-        let postVar (c : string) (f : Term) =
-            let rec postVarInternal (g : Term) =
-                match g with
-                |Varible(h) when h = c -> term
-                |Varible(_) -> g
-                |Application(l, r) -> postVarInternal l ^ postVarInternal r
-                |Abstraction(s, r) -> s * postVarInternal r 
-            postVarInternal f
-        postVar ch destinationTerm
+        let rec postVarInternal (g : Term) =
+            match g with
+            |Varible(h) when h = ch -> term
+            |Varible(_) -> g
+            |Application(l, r) -> postVarInternal l ^ postVarInternal r
+            |Abstraction(s, r) -> s * postVarInternal r 
+        postVarInternal destinationTerm
     
     let alfaReduction (setOfVar : Set<string>) (mainTerm : Term) =
         let rec alfaReductionTravelsol (term : Term) =
