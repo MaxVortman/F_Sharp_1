@@ -40,22 +40,22 @@ let normalize (sourceTerm : Term) =
         |_ -> raise NormalizedFormNotFoundException 
 
     let substitution (ch : string) (destinationTerm : Term) (term : Term) = 
-        let rec postVarInternal (g : Term) =
+        let rec substitutionInternal (g : Term) =
             match g with
             |Varible(h) when h = ch -> term
             |Varible(_) -> g
-            |Application(l, r) -> postVarInternal l ^ postVarInternal r
-            |Abstraction(s, r) -> s * postVarInternal r 
-        postVarInternal destinationTerm
+            |Application(l, r) -> substitutionInternal l ^ substitutionInternal r
+            |Abstraction(s, r) -> s * substitutionInternal r 
+        substitutionInternal destinationTerm
     
-    let alfaReduction (setOfVar : Set<string>) (mainTerm : Term) =
-        let rec alfaReductionTravelsol (term : Term) =
+    let alphaConversion (setOfVar : Set<string>) (mainTerm : Term) =
+        let rec alphaConversionTravelsol (term : Term) =
             match term with
-            |Varible(str) | Abstraction(str, _) when setOfVar.Contains str -> alfaReductionRenaming term str
+            |Varible(str) | Abstraction(str, _) when setOfVar.Contains str -> alphaConversionRenaming term str
             |Varible(_) -> term
-            |Abstraction(str, t) -> str * alfaReductionTravelsol t
-            |Application(l, r) -> alfaReductionTravelsol l ^ alfaReductionTravelsol r
-        and alfaReductionRenaming (term : Term) (varible : string) =
+            |Abstraction(str, t) -> str * alphaConversionTravelsol t
+            |Application(l, r) -> alphaConversionTravelsol l ^ alphaConversionTravelsol r
+        and alphaConversionRenaming (term : Term) (varible : string) =
             let unicName =
                 let rec findUnicName i =
                     let tryName = varible + (string i)
@@ -63,23 +63,23 @@ let normalize (sourceTerm : Term) =
                     |_ when setOfVar.Contains tryName -> findUnicName <| i + 1
                     |_ -> tryName
                 findUnicName 0
-            let afterReductionTerm =
-                let rec afterReductionInternal internalTerm = 
+            let afterConversionTerm =
+                let rec afterConversionTermInternal internalTerm = 
                     match internalTerm with
                     |Varible(str) when str = varible -> Varible(unicName)
                     |Varible(_) -> internalTerm
-                    |Abstraction(str, t) when str = varible -> unicName * afterReductionInternal t
-                    |Abstraction(str, t) -> str * afterReductionInternal t
-                    |Application(l, r) -> afterReductionInternal l ^ afterReductionInternal r
-                afterReductionInternal term
-            alfaReductionTravelsol afterReductionTerm
-        alfaReductionTravelsol mainTerm
+                    |Abstraction(str, t) when str = varible -> unicName * afterConversionTermInternal t
+                    |Abstraction(str, t) -> str * afterConversionTermInternal t
+                    |Application(l, r) -> afterConversionTermInternal l ^ afterConversionTermInternal r
+                afterConversionTermInternal term
+            alphaConversionTravelsol afterConversionTerm
+        alphaConversionTravelsol mainTerm
 
     let rec normalizeInternal (a : Term) =
         match a with
         |Varible(_) | Abstraction(_) -> a
         |Application(l, r) ->   match l with 
-                                |Abstraction(ch, t) -> alfaReduction (getSetOfVar l) r |> substitution ch t |> check |> normalizeInternal
+                                |Abstraction(ch, t) -> alphaConversion (getSetOfVar l) r |> substitution ch t |> check |> normalizeInternal
                                 |Application(_) -> ((normalizeInternal l) ^ r) |> normalizeInternal
                                 |_ -> l ^ r
     normalizeInternal sourceTerm
