@@ -23,4 +23,4 @@ let rec interactiveMode contactBook =
 [<EntryPoint>]
 let main argv =
     interactiveMode (new ContactBook())
-    0 // return an integer exit code    
+    0 // return an integer exit code

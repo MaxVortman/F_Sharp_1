@@ -53,7 +53,7 @@ let createUI (contactBook : ContactBook) =
                                 printfn "Enter a file full path: "
                                 let path = Console.ReadLine()
                                 try
-                                    serializer.Deserialize path
+                                    Some(serializer.Deserialize path)
                                 with 
                                 | :? IOException -> printfn "%s not found" path
                                                     None))
