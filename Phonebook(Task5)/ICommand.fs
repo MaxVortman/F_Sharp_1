@@ -1,7 +1,14 @@
 ﻿namespace Phonebook
 
-open System
-
 type ICommand =
     abstract member Title : string
-    abstract member Action : unit -> unit
+
+type UnitCommand(title : string, action : unit -> unit) =
+    interface ICommand with
+        member this.Title = title
+    member this.Action = action
+
+type ContactBookCommand(title : string, func : unit -> ContactBook option) =
+    interface ICommand with
+        member this.Title = title
+    member this.Func = func

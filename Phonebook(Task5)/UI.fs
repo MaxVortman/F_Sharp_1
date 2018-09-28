@@ -3,7 +3,7 @@
 open System.Collections.Generic
 
 type UI() = 
-    let commands : IDictionary<int, ICommand> = dict[]
+    let commands = new Dictionary<int, ICommand>()
     member this.AddCommand key command : unit = 
         commands.Add(key, command)
     
