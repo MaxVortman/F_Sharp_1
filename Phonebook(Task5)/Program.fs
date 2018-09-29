@@ -12,9 +12,25 @@ let rec interactiveMode contactBook =
     |ConsoleKey.Escape -> ()
     |_ ->   let command = ui.GetCommand (Convert.ToInt32(x.KeyChar.ToString()))
             match command with
-            | :? UnitCommand as c ->    c.Action()
-                                        interactiveMode contactBook
-            | :? ContactBookCommand as c -> let newContactBook = c.Func()
+            | :? AddContactCommand as c ->  printfn "Enter a name: "
+                                            let name = Console.ReadLine()
+                                            printfn "Enter a phone number: "
+                                            let number = Console.ReadLine()
+                                            c.Func name number
+                                            interactiveMode contactBook
+            | :? FindContactCommand as c -> printfn "Enter a find parameter: "
+                                            let param = Console.ReadLine()
+                                            c.Func param
+                                            interactiveMode contactBook
+            | :? PrintContactsCommand as c ->   c.Func()
+                                                interactiveMode contactBook
+            | :? SerializeCommand as c ->   printfn "Enter a file full path: "
+                                            let path = Console.ReadLine()
+                                            c.Func path
+                                            interactiveMode contactBook
+            | :? DeserializeCommand as c -> printfn "Enter a file full path: "
+                                            let path = Console.ReadLine()
+                                            let newContactBook = c.Func path
                                             match newContactBook with
                                             | None -> interactiveMode contactBook
                                             | Some(v) -> interactiveMode v
