@@ -4,7 +4,9 @@ open System
 open System.IO
 open System.Runtime.Serialization.Formatters.Binary
 
-
+/// <summary>
+/// Класс, обеспечивающий работу с средствами сериализации
+/// </summary>
 type Serializer() = 
 
     let createStream path (mode : FileMode) = new FileStream(path, mode)

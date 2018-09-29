@@ -1,5 +1,8 @@
 ﻿namespace Phonebook
 
+/// <summary>
+/// Класс, обеспечивающий работу списка контактов телефонной книги
+/// </summary>
 type ContactBook() = 
     member val Contacts : Contact list = [] with get, set
     member this.Add contact = this.Contacts <- (contact :: this.Contacts)
