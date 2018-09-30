@@ -45,20 +45,21 @@ open System
                             | Some(v) ->    v
                                                 }
         /// <summary>
-        /// Предоставляет free lock многопоточную реализацию интрейфейса ILazy
+        /// Предоставляет lock-free многопоточную реализацию интрейфейса ILazy
         /// </summary>
         /// <param name="supplier"></param>
         static member CreateLockFreeMultiThreadedLazy    supplier =
             { new ILazy<'a> with
                         member this.Get() =
                             let rec CAS () =
+                                match instance with
+                                | None ->       CASInternal ()
+                                | Some(v) ->    v
+                            and CASInternal () =
                                 let currentValue = instance
                                 let computedValue = supplier ()
                                 match Interlocked.CompareExchange(&instance, Some(computedValue), currentValue) = currentValue with
                                 | true ->   computedValue
-                                | false ->  Thread.SpinWait 10
-                                            CAS()
-                            match instance with
-                            | None ->       CAS()
-                            | Some(v) ->    v
+                                | false ->  CAS ()
+                            CAS ()
                                                 }
