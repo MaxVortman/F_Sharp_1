@@ -13,13 +13,11 @@ type Serializer() =
     let formatter = new BinaryFormatter()
 
     member s.Serialize path (obj : 'a) =         
-        let stream = createStream path FileMode.Create
+        use stream = createStream path FileMode.Create
         formatter.Serialize(stream, box obj)
-        stream.Close()
 
     member s.Deserialize path =
-        let stream = createStream path FileMode.Open
+        use stream = createStream path FileMode.Open
         let res = formatter.Deserialize(stream)
-        stream.Close()
         unbox res
 
