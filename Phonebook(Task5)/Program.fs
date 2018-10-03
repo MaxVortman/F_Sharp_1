@@ -12,31 +12,30 @@ let rec interactiveMode contactBook =
     |ConsoleKey.Escape -> ()
     |_ ->   let command = ui.GetCommand (Convert.ToInt32(x.KeyChar.ToString()))
             match command with
-            | :? AddContactCommand as c ->  printfn "Enter a name: "
+            | AddContactCommand(_, func) -> printfn "Enter a name: "
                                             let name = Console.ReadLine()
                                             printfn "Enter a phone number: "
                                             let number = Console.ReadLine()
-                                            c.Func name number
-                                            interactiveMode contactBook
-            | :? FindContactCommand as c -> printfn "Enter a find parameter: "
-                                            let param = Console.ReadLine()
-                                            c.Func param
-                                            interactiveMode contactBook
-            | :? PrintContactsCommand as c ->   c.Func()
+                                            interactiveMode <| func name number
+            | FindContactCommand(_, func) -> printfn "Enter a find parameter: "
+                                             let param = Console.ReadLine()
+                                             func param
+                                             interactiveMode contactBook
+            | PrintContactsCommand(_, func) ->  func()
                                                 interactiveMode contactBook
-            | :? SerializeCommand as c ->   printfn "Enter a file full path: "
+            | SerializeCommand(_, func) ->  printfn "Enter a file full path: "
                                             let path = Console.ReadLine()
-                                            c.Func path
+                                            func path
                                             interactiveMode contactBook
-            | :? DeserializeCommand as c -> printfn "Enter a file full path: "
-                                            let path = Console.ReadLine()
-                                            let newContactBook = c.Func path
-                                            match newContactBook with
-                                            | None -> interactiveMode contactBook
-                                            | Some(v) -> interactiveMode v
+            | DeserializeCommand(_, func) -> printfn "Enter a file full path: "
+                                             let path = Console.ReadLine()
+                                             let newContactBook = func path
+                                             match newContactBook with
+                                             | None -> interactiveMode contactBook
+                                             | Some(v) -> interactiveMode v
             | _ -> failwith "Wrong argument"
 
 [<EntryPoint>]
 let main argv =
     interactiveMode (new ContactBook())
-    0 // return an integer exit code
+    0

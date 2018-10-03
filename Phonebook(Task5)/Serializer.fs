@@ -20,4 +20,3 @@ type Serializer() =
         use stream = createStream path FileMode.Open
         let res = formatter.Deserialize(stream)
         unbox res
-

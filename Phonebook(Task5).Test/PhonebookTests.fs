@@ -14,34 +14,33 @@ module Test =
         let ui = UIFactory.createUI contactBook
         let name = "Max"
         let number = "12315513"
-        let command = (ui.GetCommand 1) :?> AddContactCommand
-        command.Func name number
-        contactBook.Contacts |> List.exactlyOne |> contactTuple |> should equal (name, number)
+        match (ui.GetCommand 1) with 
+        | AddContactCommand(_, func) -> (func name number).Contacts |> List.exactlyOne |> contactTuple |> should equal (name, number)
+        | _ -> failwith "Wrong command"
 
     [<Test>]
     let ``should add and find contact``() =
-        let contactBook = new ContactBook()
-        let ui = UIFactory.createUI contactBook
+        let ui = UIFactory.createUI (new ContactBook())
         let name = "Max"
         let number = "12315513"
-        let addCommand = (ui.GetCommand 1) :?> AddContactCommand
-        addCommand.Func name number
-        let findByNameContact = contactBook.FindByName name |> Option.get
-        let findByNumberContact = contactBook.FindByNumber number |> Option.get
-        findByNameContact |> contactTuple |> should equal (name, number)
-        findByNumberContact |> contactTuple |> should equal (name, number)
+        match (ui.GetCommand 1) with
+        | AddContactCommand(_, func) -> let updateContactBook = func name number
+                                        let findByNameContact = updateContactBook.FindByName name |> Option.get
+                                        let findByNumberContact = updateContactBook.FindByNumber number |> Option.get
+                                        findByNameContact |> contactTuple |> should equal (name, number)
+                                        findByNumberContact |> contactTuple |> should equal (name, number)
+        | _ -> failwith "Wrong command"
 
     [<Test>]
     let ``should serialize and deserialize contact book``() =
-        let contactBook = new ContactBook()
-        let ui = UIFactory.createUI contactBook
         let name = "Max"
         let number = "12315513"
         let path = @"C:\\testSerialize.test"
-        contactBook.Add (new Contact(name, number))
-        let serializeCommand = (ui.GetCommand 5) :?> SerializeCommand
-        serializeCommand.Func path
-        let deserializeCommand = (ui.GetCommand 6) :?> DeserializeCommand
-        let deserializedContactBook = deserializeCommand.Func path
-        deserializedContactBook.Value.Contacts |> List.exactlyOne |> contactTuple |> should equal (name, number)
-        File.Delete path
+        let contactBook = (new ContactBook()).Add(new Contact(name, number))
+        let ui = UIFactory.createUI contactBook
+        match (ui.GetCommand 5), (ui.GetCommand 6) with 
+        | SerializeCommand(_, funcSer), DeserializeCommand(_, funcDes) ->   funcSer path
+                                                                            let deserializedContactBook = funcDes path
+                                                                            deserializedContactBook.Value.Contacts |> List.exactlyOne |> contactTuple |> should equal (name, number)
+                                                                            File.Delete path
+        | _ -> failwith "Wrong command"

@@ -1,17 +1,22 @@
 ﻿namespace Phonebook
 
-open System.Collections.Generic
-
 /// <summary>
 /// Класс, обеспечивающий работу с пользовательским интерфейсом
 /// </summary>
-type UI() = 
-    let commands = new Dictionary<int, ICommand>()
-    member this.AddCommand key command : unit = 
-        commands.Add(key, command)
+type UI(commands : Map<int, Command>) = 
+    member this.AddCommand key command : UI = 
+        new UI(commands.Add(key, command))
     
     member this.PrintCommands : unit =
-        for KeyValue(k, v) in commands do
-            printfn "%s" v.Title
-
-    member this.GetCommand key : ICommand = commands.[key]
+        //for KeyValue(k, v) in commands do
+        //    printfn "%s" v.Title
+        let rec printCommandsInternal cmds = 
+            match cmds with
+            | h :: t -> match h with
+                        | SerializeCommand(title, _) | DeserializeCommand(title, _) | AddContactCommand(title, _)
+                        | FindContactCommand(title, _) | PrintContactsCommand(title, _) ->  printfn "%s" title
+                                                                                            printCommandsInternal t
+            | _ -> ()
+        commands |> Map.toList |> List.map (snd) |> printCommandsInternal
+            
+    member this.GetCommand key : Command = commands.[key]
