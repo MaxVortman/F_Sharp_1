@@ -13,13 +13,14 @@ open System
     /// Фабрика, предоставляющая реализации интерфейса ILazy
     /// </summary>
     type LazyFactory<'a when 'a : equality> () = 
+        [<VolatileField>]
         static let mutable instance : 'a option = None
         static let lockObj = new Object()
         /// <summary>
         /// Предоставляет однопоточную реализацию интрейфейса ILazy
         /// </summary>
-        /// <param name="supplier"></param>
-        static member CreateSingleThreadedLazy           supplier =
+        /// <param name="supplier">Функция, вычисляющая значение instance</param>
+        static member CreateSingleThreadedLazy supplier =
             { new ILazy<'a> with
                         member this.Get() = 
                             match instance with
@@ -33,22 +34,23 @@ open System
         /// <summary>
         /// Предоставляет многопоточную реализацию интрейфейса ILazy
         /// </summary>
-        /// <param name="supplier"></param>
-        static member CreateMultiThreadedLazy            supplier =
+        /// <param name="supplier">Функция, вычисляющая значение instance</param>
+        static member CreateMultiThreadedLazy supplier =
             { new ILazy<'a> with
                         member this.Get() =         
                             match instance with
-                            | None ->       lock lockObj (fun() -> 
-                                                                    let newInstance = supplier ()
-                                                                    instance <- Some(newInstance)
-                                                                    newInstance)
+                            | None ->       lock lockObj (fun() ->  match instance with
+                                                                    | None ->       let newInstance = supplier ()
+                                                                                    instance <- Some(newInstance)
+                                                                                    newInstance
+                                                                    | Some(v) ->    v)
                             | Some(v) ->    v
                                                 }
         /// <summary>
         /// Предоставляет lock-free многопоточную реализацию интрейфейса ILazy
         /// </summary>
-        /// <param name="supplier"></param>
-        static member CreateLockFreeMultiThreadedLazy    supplier =
+        /// <param name="supplier">Функция, вычисляющая значение instance</param>
+        static member CreateLockFreeMultiThreadedLazy supplier =
             { new ILazy<'a> with
                         member this.Get() =
                             let rec CAS () =
