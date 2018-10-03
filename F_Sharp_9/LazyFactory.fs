@@ -14,13 +14,13 @@ type ILazy<'a> =
 /// </summary>
 type LazyFactory<'a when 'a : equality> () = 
     [<VolatileField>]
-    static let mutable instance : 'a option = None
+    let mutable instance : 'a option = None
     static let lockObj = new Object()
     /// <summary>
     /// Предоставляет однопоточную реализацию интрейфейса ILazy
     /// </summary>
     /// <param name="supplier">Функция, вычисляющая значение instance</param>
-    static member CreateSingleThreadedLazy supplier =
+    member this.CreateSingleThreadedLazy supplier =
         { new ILazy<'a> with
                     member this.Get() = 
                         match instance with
@@ -35,7 +35,7 @@ type LazyFactory<'a when 'a : equality> () =
     /// Предоставляет многопоточную реализацию интрейфейса ILazy
     /// </summary>
     /// <param name="supplier">Функция, вычисляющая значение instance</param>
-    static member CreateMultiThreadedLazy supplier =
+    member this.CreateMultiThreadedLazy supplier =
         { new ILazy<'a> with
                     member this.Get() =         
                         match instance with
@@ -50,7 +50,7 @@ type LazyFactory<'a when 'a : equality> () =
     /// Предоставляет lock-free многопоточную реализацию интрейфейса ILazy
     /// </summary>
     /// <param name="supplier">Функция, вычисляющая значение instance</param>
-    static member CreateLockFreeMultiThreadedLazy supplier =
+    member this.CreateLockFreeMultiThreadedLazy supplier =
         { new ILazy<'a> with
                     member this.Get() =
                         let rec CAS () =
