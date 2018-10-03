@@ -3,13 +3,12 @@
 /// <summary>
 /// Класс, обеспечивающий работу с пользовательским интерфейсом
 /// </summary>
+/// <param name="commands">Команды пользовательского интерфейса</param>
 type UI(commands : Map<int, Command>) = 
     member this.AddCommand key command : UI = 
         new UI(commands.Add(key, command))
     
     member this.PrintCommands : unit =
-        //for KeyValue(k, v) in commands do
-        //    printfn "%s" v.Title
         let rec printCommandsInternal cmds = 
             match cmds with
             | h :: t -> match h with

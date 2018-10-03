@@ -3,6 +3,7 @@
 /// <summary>
 /// Класс, обеспечивающий работу списка контактов телефонной книги
 /// </summary>
+/// <param name="contacts">Список контактов</param>
 type ContactBook(contacts : Contact list) = 
     new() = ContactBook([])
     member this.Contacts = contacts

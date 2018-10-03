@@ -1,6 +1,5 @@
 ﻿namespace Phonebook
 
-open System
 open System.IO
 open System.Runtime.Serialization.Formatters.Binary
 
