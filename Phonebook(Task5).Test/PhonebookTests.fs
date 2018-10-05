@@ -35,7 +35,7 @@ module Test =
     let ``should serialize and deserialize contact book``() =
         let name = "Max"
         let number = "12315513"
-        let path = @"C:\\testSerialize.test"
+        let path = @"testSerialize.test"
         let contactBook = (new ContactBook()).Add(new Contact(name, number))
         let ui = UIFactory.createUI contactBook
         match (ui.GetCommand 5), (ui.GetCommand 6) with 
