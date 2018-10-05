@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Contact.fs" />
+    <Compile Include="ContactBook.fs" />
+    <Compile Include="Command.fs" />
+    <Compile Include="UI.fs" />
+    <Compile Include="Serializer.fs" />
+    <Compile Include="UIFactory.fs" />
     <Compile Include="Program.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.3.4" />
   </ItemGroup>
 
 </Project>
