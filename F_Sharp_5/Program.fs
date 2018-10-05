@@ -1,5 +1,5 @@
 ﻿namespace GenericTasks
-
+ 
 module ``1`` =
 
     type Brackets = 
@@ -35,3 +35,15 @@ module ``1`` =
             travesol [] (Seq.toList str)
         with 
         | IncorrectBracketsSeqException -> false
+
+module ``2`` = 
+
+    let func x l = List.map (fun y -> y * x) l
+
+    let func'1 x = List.map (fun y -> y * x)
+
+    let func'2 x = List.map (fun y -> (*) y x)
+
+    let func'3 x = List.map ((*) x)
+
+    let func'4 : int -> int list -> int list = List.map << (*

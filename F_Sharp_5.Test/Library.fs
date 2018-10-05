@@ -2,7 +2,6 @@ namespace F_Sharp_5.Test
 
 open NUnit.Framework
 open FsUnit
-
 module ``1`` =
     open NUnit.Framework.Constraints
     
@@ -29,3 +28,11 @@ module ``1`` =
     [<Test>]
     let ``should be incorrect at sample: "[(])"`` () = 
         "[(])" |> GenericTasks.``1``.isCorrectSeq |> should equal false
+        
+open FsCheck.NUnit
+
+[<TestFixture>]
+module ``2`` =
+
+    [<Property>]
+    let ``point free test`` (x : int) (l : list<int>) = Generic_Tasks.``2``.func x l = Generic_Tasks.``2``.func'4 x l
