@@ -7,7 +7,7 @@ module F_Sharp_3
         module FirstOption = 
             let countEvenNumbers list =            
                 list |> List.map (fun x -> if x % 2 = 0 then 1 else 0) |> List.sum
-    
+   
         module SecondOption = 
             let countEvenNumbers list = 
                 list |> List.filter (fun x -> x % 2 = 0) |> List.length       
@@ -64,4 +64,4 @@ module F_Sharp_3
                 seq { yield number 
                       yield! unlimitedMinimization number |> infinitePrimeSeqFrom}
 
-            Seq.append <| [ 2 ] <| infinitePrimeSeqFrom 3 
+            Seq.append <| [ 2 ] <| infinitePrimeSeqFrom 3
